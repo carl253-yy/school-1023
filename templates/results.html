@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ school.name }} | Parent Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body class="results-body">
+  <div class="results-shell">
+    <h1 class="results-title">{{ school.name }}</h1>
+    <p class="results-subtitle">Enter your child's unique learner number to view their CBC assessment report, class averages, and teacher remarks.</p>
+
+    <form class="search-form" method="get" action="/results">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" name="admission_number" placeholder="e.g. G5-A7B29" value="{{ admission_number }}" />
+      </div>
+      <button type="submit" class="search-btn">Search Results</button>
+    </form>
+
+    {% if message %}
+      <p class="info-message">{{ message }}</p>
+    {% endif %}
+
+    {% if record %}
+      <div class="result-card">
+        <h2>Result Details</h2>
+        <p><strong>Admission Number:</strong> {{ record.admission_number }}</p>
+        <p><strong>NEMIS ID:</strong> {{ record.nemis_id }}</p>
+        <p><strong>Student Name:</strong> {{ record.student_name }}</p>
+        <p><strong>Grade:</strong> {{ record.grade }}</p>
+        <p><strong>Teacher:</strong> {{ record.teacher }}</p>
+        <p><strong>Class Average:</strong> {{ record.class_average }}</p>
+        <p><strong>Letter Grade:</strong> {{ record.letter_grade }}</p>
+        <p><strong>Behavior:</strong> {{ record.behavior }}</p>
+        <p><strong>Teacher Remarks:</strong> {{ record.teacher_remarks }}</p>
+
+        <h3>CBC Assessment Tracker</h3>
+        <ul>
+          {% for area in record.cbc_tracker %}
+            <li>{{ area.name }} — {{ area.score }} ({{ area.rubric }})</li>
+          {% endfor %}
+        </ul>
+
+        <h3>Learning Areas</h3>
+        <ul>
+          {% for area in record.learning_areas %}
+            <li>{{ area.name }} — {{ area.score }} ({{ area.score|float|round(1) }})</li>
+          {% endfor %}
+        </ul>
+
+        <div class="result-actions">
+          <a class="save-btn" href="/download_report?admission_number={{ record.admission_number }}">Download Report</a>
+          <a class="btn-secondary" href="mailto:school@example.com?subject=Child%20Performance%20Support">Contact Teacher</a>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="feature-row">
+      <div class="feature-item">
+        <div class="feature-icon">🛡️</div>
+        <div>
+          <strong>Private & Secure</strong>
+          <p>Only linked parents can view</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">▥</div>
+        <div>
+          <strong>CBC Tracker</strong>
+          <p>Rubric level by learning area</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎓</div>
+        <div>
+          <strong>All Subjects</strong>
+          <p>Detailed score breakdown</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

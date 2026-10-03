@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Teacher Dashboard | {{ school.name if school else "School Results Portal" }}
+    </title>
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+            --navy: #0d3155;
+            --navy-dark: #08233f;
+            --navy-light: #163f67;
+
+            --gold: #f4b73b;
+            --gold-light: #fff5d8;
+
+            --teal: #0e7478;
+
+            --white: #ffffff;
+
+            --background: #f5f7fa;
+
+            --border: #e4e8ee;
+
+            --text: #1d2939;
+
+            --muted: #667085;
+
+            --success: #16803c;
+
+            --danger: #d92d20;
+
+            --shadow:
+                0 8px 30px rgba(16, 24, 40, .06);
+
+            --radius: 14px;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: "Inter", sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+            min-height:
+                100vh;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           LAYOUT
+        ===================================================== */
+
+        .teacher-shell {
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            width:
+                270px;
+
+            min-width:
+                270px;
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            min-height:
+                100vh;
+
+            position:
+                fixed;
+
+            left:
+                0;
+
+            top:
+                0;
+
+            bottom:
+                0;
+
+            z-index:
+                1000;
+
+            overflow-y:
+                auto;
+        }
+
+
+        /* Brand */
+
+        .portal-brand {
+
+            padding:
+                24px 20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .brand-mark {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(255,255,255,.1);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                20px;
+        }
+
+
+        .portal-brand h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                21px;
+
+            line-height:
+                1.1;
+        }
+
+
+        .portal-brand p {
+
+            color:
+                #aabed2;
+
+            font-size:
+                10px;
+
+            margin-top:
+                3px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+        }
+
+
+        /* Teacher Profile */
+
+        .sidebar-profile {
+
+            padding:
+                22px 20px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .profile-main {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+        }
+
+
+        .profile-image {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                2px solid var(--gold);
+
+            background:
+                #234d72;
+        }
+
+
+        .profile-placeholder {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+            color:
+                var(--navy);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                18px;
+
+            font-weight:
+                800;
+        }
+
+
+        .profile-details {
+
+            min-width:
+                0;
+        }
+
+
+        .profile-details strong {
+
+            display:
+                block;
+
+            color:
+                white;
+
+            font-size:
+                13px;
+
+            white-space:
+                nowrap;
+
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+        }
+
+
+        .profile-details span {
+
+            display:
+                block;
+
+            color:
+                #aabed2;
+
+            font-size:
+                10px;
+
+            margin-top:
+                4px;
+        }
+
+
+        .gender-badge {
+
+            display:
+                inline-flex;
+
+            margin-top:
+                9px;
+
+            padding:
+                4px 8px;
+
+            border-radius:
+                20px;
+
+            background:
+                rgba(244,183,59,.12);
+
+            color:
+                #ffd778;
+
+            font-size:
+                9px;
+        }
+
+
+        /* Navigation */
+
+        .sidebar-nav {
+
+            padding:
+                16px 12px;
+
+            flex:
+                1;
+        }
+
+
+        .nav-label {
+
+            color:
+                #7995af;
+
+            font-size:
+                9px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1.2px;
+
+            padding:
+                10px 12px 7px;
+        }
+
+
+        .nav-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                11px 12px;
+
+            border-radius:
+                8px;
+
+            color:
+                #c7d5e2;
+
+            font-size:
+                12px;
+
+            margin-bottom:
+                2px;
+
+            transition:
+                .2s;
+        }
+
+
+        .nav-item i {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            font-size:
+                13px;
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255,255,255,.07);
+
+            color:
+                white;
+        }
+
+
+        .nav-item.active {
+
+            background:
+                var(--gold);
+
+            color:
+                var(--navy);
+
+            font-weight:
+                700;
+        }
+
+
+        .nav-item .badge {
+
+            margin-left:
+                auto;
+
+            background:
+                #e5484d;
+
+            color:
+                white;
+
+            min-width:
+                18px;
+
+            height:
+                18px;
+
+            border-radius:
+                20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                9px;
+        }
+
+
+        .submenu {
+
+            display:
+                none;
+
+            padding-left:
+                42px;
+
+            margin-bottom:
+                5px;
+        }
+
+
+        .submenu.show {
+            display:
+                block;
+        }
+
+
+        .submenu a {
+
+            display:
+                block;
+
+            color:
+                #9fb4c9;
+
+            font-size:
+                11px;
+
+            padding:
+                7px 8px;
+        }
+
+
+        .submenu a:hover {
+            color:
+                white;
+        }
+
+
+        .chevron {
+
+            margin-left:
+                auto;
+
+            font-size:
+                9px;
+        }
+
+
+        /* Logout */
+
+        .sidebar-footer {
+
+            padding:
+                14px 12px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .logout {
+
+            color:
+                #ffb7b7 !important;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .teacher-main {
+
+            margin-left:
+                270px;
+
+            width:
+                calc(100% - 270px);
+
+            min-height:
+                100vh;
+        }
+
+
+        /* =====================================================
+           TOP HEADER
+        ===================================================== */
+
+        .teacher-header {
+
+            height:
+                76px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--border);
+
+            padding:
+                0 32px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                100;
+        }
+
+
+        .header-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+        }
+
+
+        .mobile-menu {
+
+            display:
+                none;
+
+            border:
+                0;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+            color:
+                var(--navy);
+
+            cursor:
+                pointer;
+        }
+
+
+        .eyebrow {
+
+            font-size:
+                9px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1.3px;
+
+            color:
+                var(--teal);
+
+            font-weight:
+                700;
+        }
+
+
+        .teacher-header h1 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                30px;
+
+            color:
+                var(--navy);
+
+            margin-top:
+                2px;
+        }
+
+
+        .header-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+        }
+
+
+        .icon-button {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                9px;
+
+            background:
+                white;
+
+            color:
+                var(--muted);
+
+            cursor:
+                pointer;
+
+            position:
+                relative;
+        }
+
+
+        .notification-dot {
+
+            position:
+                absolute;
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                #e5484d;
+
+            right:
+                8px;
+
+            top:
+                7px;
+        }
+
+
+        .header-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            padding-left:
+                8px;
+        }
+
+
+        .header-profile img {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                2px solid #e9edf2;
+        }
+
+
+        .header-profile-info strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .header-profile-info span {
+
+            font-size:
+                9px;
+
+            color:
+                var(--muted);
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .dashboard-content {
+
+            padding:
+                30px 32px 45px;
+        }
+
+
+        .welcome-row {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                24px;
+        }
+
+
+        .welcome h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                34px;
+
+            color:
+                var(--navy);
+        }
+
+
+        .welcome p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            margin-top:
+                4px;
+        }
+
+
+        .date-box {
+
+            padding:
+                9px 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                9px;
+
+            background:
+                white;
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                16px;
+
+            margin-bottom:
+                24px;
+        }
+
+
+        .stat-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                20px;
+
+            box-shadow:
+                var(--shadow);
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+        }
+
+
+        .stat-top {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+        }
+
+
+        .stat-icon {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            border-radius:
+                10px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                var(--gold-light);
+
+            color:
+                #c58b0c;
+        }
+
+
+        .stat-number {
+
+            font-size:
+                27px;
+
+            font-weight:
+                800;
+
+            color:
+                var(--navy);
+
+            margin-top:
+                15px;
+        }
+
+
+        .stat-title {
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+            margin-top:
+                3px;
+        }
+
+
+        .stat-change {
+
+            font-size:
+                9px;
+
+            color:
+                var(--success);
+
+            margin-top:
+                9px;
+        }
+
+
+        /* =====================================================
+           GRID
+        ===================================================== */
+
+        .dashboard-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.6fr 1fr;
+
+            gap:
+                20px;
+        }
+
+
+        .panel {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            box-shadow:
+                var(--shadow);
+
+            overflow:
+                hidden;
+        }
+
+
+        .panel-header {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+        }
+
+
+        .panel-header h3 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                23px;
+
+            color:
+                var(--navy);
+        }
+
+
+        .view-all {
+
+            color:
+                var(--teal);
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+        }
+
+
+        .panel-body {
+            padding:
+                18px 20px;
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .quick-actions {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                12px;
+        }
+
+
+        .quick-action {
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                10px;
+
+            padding:
+                16px;
+
+            color:
+                var(--navy);
+
+            transition:
+                .2s;
+        }
+
+
+        .quick-action:hover {
+
+            border-color:
+                var(--gold);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,.05);
+        }
+
+
+        .quick-action i {
+
+            color:
+                var(--teal);
+
+            font-size:
+                18px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .quick-action strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .quick-action span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            margin-top:
+                4px;
+
+            line-height:
+                1.5;
+        }
+
+
+        /* =====================================================
+           TIMETABLE
+        ===================================================== */
+
+        .schedule-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                12px 0;
+
+            border-bottom:
+                1px solid #edf0f3;
+        }
+
+
+        .schedule-item:last-child {
+            border-bottom:
+                0;
+        }
+
+
+        .time {
+
+            width:
+                62px;
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+
+            color:
+                var(--navy);
+        }
+
+
+        .schedule-dot {
+
+            width:
+                8px;
+
+            height:
+                8px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+        }
+
+
+        .schedule-info {
+
+            flex:
+                1;
+        }
+
+
+        .schedule-info strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .schedule-info span {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+            color:
+                var(--muted);
+
+            margin-top:
+                3px;
+        }
+
+
+        /* =====================================================
+           RECENT RESULTS
+        ===================================================== */
+
+        .result-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                12px 0;
+
+            border-bottom:
+                1px solid #edf0f3;
+        }
+
+
+        .result-student {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+        }
+
+
+        .student-avatar {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border-radius:
+                50%;
+
+            background:
+                #eaf2f7;
+
+            color:
+                var(--navy);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-weight:
+                700;
+
+            font-size:
+                10px;
+        }
+
+
+        .result-student strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+        }
+
+
+        .result-student span {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+            color:
+                var(--muted);
+
+            margin-top:
+                2px;
+        }
+
+
+        .result-status {
+
+            font-size:
+                9px;
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                20px;
+        }
+
+
+        .status-submitted {
+
+            background:
+                #e8f7ee;
+
+            color:
+                var(--success);
+        }
+
+
+        .status-draft {
+
+            background:
+                #fff5d8;
+
+            color:
+                #a46b00;
+        }
+
+
+        /* =====================================================
+           PROFILE CARD
+        ===================================================== */
+
+        .profile-card {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+        }
+
+
+        .profile-card img {
+
+            width:
+                70px;
+
+            height:
+                70px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                3px solid #edf1f5;
+        }
+
+
+        .profile-card h3 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                24px;
+
+            color:
+                var(--navy);
+        }
+
+
+        .profile-card p {
+
+            font-size:
+                10px;
+
+            color:
+                var(--muted);
+
+            margin-top:
+                3px;
+        }
+
+
+        .profile-meta {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+            flex-wrap:
+                wrap;
+
+            margin-top:
+                8px;
+        }
+
+
+        .meta-badge {
+
+            padding:
+                4px 8px;
+
+            background:
+                #f4f6f8;
+
+            color:
+                var(--muted);
+
+            border-radius:
+                20px;
+
+            font-size:
+                8px;
+        }
+
+
+        .edit-profile {
+
+            display:
+                inline-flex;
+
+            margin-top:
+                13px;
+
+            padding:
+                8px 12px;
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            border-radius:
+                7px;
+
+            font-size:
+                9px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 1150px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media(max-width: 800px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    .25s;
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+
+            .teacher-main {
+
+                margin-left:
+                    0;
+
+                width:
+                    100%;
+            }
+
+
+            .mobile-menu {
+
+                display:
+                    block;
+            }
+
+
+            .teacher-header {
+
+                padding:
+                    0 18px;
+            }
+
+
+            .dashboard-content {
+
+                padding:
+                    22px 18px;
+            }
+
+
+            .header-profile-info {
+                display:
+                    none;
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .welcome-row {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+                gap:
+                    12px;
+            }
+
+
+            .quick-actions {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .header-profile {
+                display:
+                    none;
+            }
+
+
+            .teacher-header h1 {
+                font-size:
+                    25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="teacher-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- BRAND -->
+
+        <div class="portal-brand">
+
+            <div class="brand-mark">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Teacher Portal
+                </h2>
+
+                <p>
+                    Academic Management
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TEACHER PROFILE -->
+
+        <div class="sidebar-profile">
+
+            <div class="profile-main">
+
+                {% if teacher_image %}
+
+                    <img
+                        src="{{ teacher_image }}"
+                        alt="Teacher profile"
+                        class="profile-image"
+                    >
+
+                {% else %}
+
+                    <div class="profile-placeholder">
+
+                        {{ teacher_name[:1]|upper
+                           if teacher_name
+                           else "T" }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="profile-details">
+
+                    <strong>
+                        {{ teacher_name
+                           if teacher_name
+                           else "Teacher Name" }}
+                    </strong>
+
+                    <span>
+                        {{ teacher_email
+                           if teacher_email
+                           else "teacher@school.ac.ke" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <span class="gender-badge">
+
+                <i class="fa-solid fa-user"></i>
+
+                {{ teacher_gender
+                   if teacher_gender
+                   else "Gender not set" }}
+
+            </span>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <div class="nav-label">
+                Main
+            </div>
+
+
+            <a
+                href="/teacher/dashboard"
+                class="nav-item active"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/teacher/classes"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-school"></i>
+
+                My Classes
+
+            </a>
+
+
+            <a
+                href="/teacher/subjects"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-book-open"></i>
+
+                My Subjects
+
+            </a>
+
+
+            <a
+                href="/teacher/learners"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                Learners
+
+            </a>
+
+
+
+            <!-- CBC -->
+
+            <div
+                class="nav-item"
+                onclick="toggleMenu('cbc-menu', this)"
+                style="cursor:pointer"
+            >
+
+                <i class="fa-solid fa-clipboard-check"></i>
+
+                CBC Assessment
+
+                <i class="fa-solid fa-chevron-down chevron"></i>
+
+            </div>
+
+
+            <div
+                class="submenu"
+                id="cbc-menu"
+            >
+
+                <a href="/teacher/results">
+                    Enter Results
+                </a>
+
+                <a href="/teacher/results/drafts">
+                    Draft Results
+                </a>
+
+                <a href="/teacher/results/submitted">
+                    Submitted Results
+                </a>
+
+                <a href="/teacher/results/history">
+                    Assessment History
+                </a>
+
+            </div>
+
+
+
+            <a
+                href="/teacher/competencies"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-bullseye"></i>
+
+                Competencies
+
+            </a>
+
+
+            <a
+                href="/teacher/attendance"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Attendance
+
+            </a>
+
+
+            <a
+                href="/teacher/assignments"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-pen-to-square"></i>
+
+                Assignments
+
+            </a>
+
+
+
+            <!-- LESSON PLANNING -->
+
+            <div
+                class="nav-item"
+                onclick="toggleMenu('lesson-menu', this)"
+                style="cursor:pointer"
+            >
+
+                <i class="fa-solid fa-chalkboard-user"></i>
+
+                Lesson Planning
+
+                <i class="fa-solid fa-chevron-down chevron"></i>
+
+            </div>
+
+
+            <div
+                class="submenu"
+                id="lesson-menu"
+            >
+
+                <a href="/teacher/schemes">
+                    Schemes of Work
+                </a>
+
+                <a href="/teacher/lesson-plans">
+                    Lesson Plans
+                </a>
+
+                <a href="/teacher/resources">
+                    Teaching Resources
+                </a>
+
+            </div>
+
+
+
+            <a
+                href="/teacher/timetable"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-clock"></i>
+
+                Timetable
+
+            </a>
+
+
+            <a
+                href="/teacher/analytics"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Performance Analytics
+
+            </a>
+
+
+            <a
+                href="/teacher/reports"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                Reports
+
+            </a>
+
+
+
+            <div class="nav-label">
+                Communication
+            </div>
+
+
+            <a
+                href="/teacher/messages"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-comments"></i>
+
+                Messages
+
+                <span class="badge">
+                    3
+                </span>
+
+            </a>
+
+
+            <a
+                href="/teacher/announcements"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-bullhorn"></i>
+
+                Announcements
+
+            </a>
+
+
+            <a
+                href="/teacher/resources"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-folder-open"></i>
+
+                Resources
+
+            </a>
+
+
+            <a
+                href="/teacher/notifications"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-bell"></i>
+
+                Notifications
+
+                <span class="badge">
+                    5
+                </span>
+
+            </a>
+
+
+            <div class="nav-label">
+                Account
+            </div>
+
+
+            <a
+                href="/teacher/profile"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                My Profile
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="/teacher/logout"
+                class="nav-item logout"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="teacher-main">
+
+
+        <!-- HEADER -->
+
+        <header class="teacher-header">
+
+
+            <div class="header-left">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        School Management System
+                    </p>
+
+                    <h1>
+                        Teacher Dashboard
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="header-actions">
+
+
+                <button
+                    class="icon-button"
+                    title="Notifications"
+                    onclick="location.href='/teacher/notifications'"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <button
+                    class="icon-button"
+                    title="Messages"
+                    onclick="location.href='/teacher/messages'"
+                >
+
+                    <i class="fa-regular fa-comment-dots"></i>
+
+                </button>
+
+
+                <div class="header-profile">
+
+                    {% if teacher_image %}
+
+                        <img
+                            src="{{ teacher_image }}"
+                            alt="Teacher"
+                        >
+
+                    {% else %}
+
+                        <div class="profile-placeholder">
+
+                            {{ teacher_name[:1]|upper
+                               if teacher_name
+                               else "T" }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="header-profile-info">
+
+                        <strong>
+                            {{ teacher_name
+                               if teacher_name
+                               else "Teacher" }}
+                        </strong>
+
+                        <span>
+                            Teacher
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             DASHBOARD CONTENT
+        ====================================================== -->
+
+        <section class="dashboard-content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-row">
+
+                <div class="welcome">
+
+                    <h2>
+
+                        Good day,
+                        {{ teacher_name
+                           if teacher_name
+                           else "Teacher" }}
+
+                    </h2>
+
+                    <p>
+                        Here's an overview of your teaching
+                        activities and learner progress.
+                    </p>
+
+                </div>
+
+
+                <div class="date-box">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    {{ current_date
+                       if current_date
+                       else "Academic Year 2026" }}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-number">
+                                {{ class_count
+                                   if class_count is defined
+                                   else "0" }}
+                            </div>
+
+                            <div class="stat-title">
+                                My Classes
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-school"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-change">
+                        Active classes
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-number">
+                                {{ learner_count
+                                   if learner_count is defined
+                                   else "0" }}
+                            </div>
+
+                            <div class="stat-title">
+                                Learners
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-user-graduate"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-change">
+                        Assigned learners
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-number">
+                                {{ results_count
+                                   if results_count is defined
+                                   else "0" }}
+                            </div>
+
+                            <div class="stat-title">
+                                Results Entered
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-clipboard-check"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-change">
+                        This term
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-number">
+                                {{ pending_count
+                                   if pending_count is defined
+                                   else "0" }}
+                            </div>
+
+                            <div class="stat-title">
+                                Pending Approval
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-hourglass-half"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-change">
+                        Awaiting review
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MAIN GRID
+            ================================================== -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- LEFT COLUMN -->
+
+                <div>
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="quick-actions">
+
+
+                                <a
+                                    href="/teacher/results"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                    <strong>
+                                        Enter Results
+                                    </strong>
+
+                                    <span>
+                                        Record CBC learner
+                                        assessments.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/teacher/attendance"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-calendar-check"></i>
+
+                                    <strong>
+                                        Mark Attendance
+                                    </strong>
+
+                                    <span>
+                                        Record today's learner
+                                        attendance.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/teacher/lesson-plans"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-book"></i>
+
+                                    <strong>
+                                        Lesson Planning
+                                    </strong>
+
+                                    <span>
+                                        Manage lesson plans and
+                                        schemes.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/teacher/assignments"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-file-pen"></i>
+
+                                    <strong>
+                                        Assignments
+                                    </strong>
+
+                                    <span>
+                                        Create and manage
+                                        assignments.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/teacher/analytics"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-chart-column"></i>
+
+                                    <strong>
+                                        Analytics
+                                    </strong>
+
+                                    <span>
+                                        Analyse learner
+                                        performance.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/teacher/reports"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-file-lines"></i>
+
+                                    <strong>
+                                        Reports
+                                    </strong>
+
+                                    <span>
+                                        Generate academic
+                                        reports.
+                                    </span>
+
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RECENT RESULTS -->
+
+                    <div
+                        class="panel"
+                        style="margin-top:20px"
+                    >
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Recent Results
+                            </h3>
+
+                            <a
+                                href="/teacher/results/history"
+                                class="view-all"
+                            >
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            <div class="result-item">
+
+                                <div class="result-student">
+
+                                    <div class="student-avatar">
+                                        JM
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Jane Mwangi
+                                        </strong>
+
+                                        <span>
+                                            Mathematics • Grade 6
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="result-status status-submitted">
+                                    Submitted
+                                </span>
+
+                            </div>
+
+
+
+                            <div class="result-item">
+
+                                <div class="result-student">
+
+                                    <div class="student-avatar">
+                                        BK
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Brian Kamau
+                                        </strong>
+
+                                        <span>
+                                            English • Grade 6
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="result-status status-draft">
+                                    Draft
+                                </span>
+
+                            </div>
+
+
+
+                            <div class="result-item">
+
+                                <div class="result-student">
+
+                                    <div class="student-avatar">
+                                        AW
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Alice Wanjiku
+                                        </strong>
+
+                                        <span>
+                                            Science • Grade 5
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="result-status status-submitted">
+                                    Submitted
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- RIGHT COLUMN -->
+
+                <div>
+
+
+                    <!-- PROFILE -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                My Profile
+                            </h3>
+
+                            <a
+                                href="/teacher/profile"
+                                class="view-all"
+                            >
+                                Edit
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="profile-card">
+
+
+                                {% if teacher_image %}
+
+                                    <img
+                                        src="{{ teacher_image }}"
+                                        alt="{{ teacher_name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="profile-placeholder">
+
+                                        {{ teacher_name[:1]|upper
+                                           if teacher_name
+                                           else "T" }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div>
+
+                                    <h3>
+                                        {{ teacher_name
+                                           if teacher_name
+                                           else "Teacher Name" }}
+                                    </h3>
+
+                                    <p>
+                                        {{ teacher_email
+                                           if teacher_email
+                                           else "teacher@school.ac.ke" }}
+                                    </p>
+
+
+                                    <div class="profile-meta">
+
+                                        <span class="meta-badge">
+
+                                            <i class="fa-solid fa-user"></i>
+
+                                            {{ teacher_gender
+                                               if teacher_gender
+                                               else "Gender" }}
+
+                                        </span>
+
+
+                                        <span class="meta-badge">
+
+                                            <i class="fa-solid fa-chalkboard-user"></i>
+
+                                            Teacher
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <a
+                                        href="/teacher/profile"
+                                        class="edit-profile"
+                                    >
+
+                                        Manage Profile
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TIMETABLE -->
+
+                    <div
+                        class="panel"
+                        style="margin-top:20px"
+                    >
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Today's Timetable
+                            </h3>
+
+                            <a
+                                href="/teacher/timetable"
+                                class="view-all"
+                            >
+                                Full timetable
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            <div class="schedule-item">
+
+                                <div class="time">
+                                    08:00
+                                </div>
+
+                                <div class="schedule-dot"></div>
+
+                                <div class="schedule-info">
+
+                                    <strong>
+                                        Mathematics
+                                    </strong>
+
+                                    <span>
+                                        Grade 6 • Room 4
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="schedule-item">
+
+                                <div class="time">
+                                    10:00
+                                </div>
+
+                                <div class="schedule-dot"></div>
+
+                                <div class="schedule-info">
+
+                                    <strong>
+                                        Kiswahili
+                                    </strong>
+
+                                    <span>
+                                        Grade 7 • Room 2
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="schedule-item">
+
+                                <div class="time">
+                                    14:00
+                                </div>
+
+                                <div class="schedule-dot"></div>
+
+                                <div class="schedule-info">
+
+                                    <strong>
+                                        CRE
+                                    </strong>
+
+                                    <span>
+                                        Grade 8 • Room 5
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+
+
+    /* =====================================================
+       SIDEBAR SUBMENUS
+    ===================================================== */
+
+    function toggleMenu(id, element) {
+
+        const menu =
+            document.getElementById(id);
+
+        menu.classList.toggle("show");
+
+        const icon =
+            element.querySelector(".chevron");
+
+        if (icon) {
+
+            icon.classList.toggle(
+                "fa-chevron-down"
+            );
+
+            icon.classList.toggle(
+                "fa-chevron-up"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLOSE MOBILE SIDEBAR WHEN LINK IS CLICKED
+    ===================================================== */
+
+    document
+        .querySelectorAll(".sidebar a")
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        window.innerWidth <= 800
+                    ) {
+
+                        document
+                            .getElementById("sidebar")
+                            .classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+
+</script>
+
+
+</body>
+
+</html>

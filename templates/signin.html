@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ school.name }} | Create Account
+    </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --navy: #0d3155;
+            --navy-dark: #092743;
+            --navy-light: #153d65;
+
+            --gold: #f4b73b;
+            --gold-dark: #d99b1e;
+
+            --cream: #faf9f5;
+            --white: #ffffff;
+
+            --text: #0c2947;
+            --muted: #66758a;
+
+            --border: #dedbd3;
+            --input-border: #d8d5ce;
+
+            --success: #0e6b6f;
+            --error: #b3261e;
+
+            --shadow: 0 8px 25px rgba(15, 23, 42, 0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button, input {
+            font-family: inherit;
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .signin-page {
+            min-height: 100vh;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 51.5% 48.5%;
+        }
+
+        @media (max-width: 900px) {
+            .signin-page {
+                grid-template-columns: 1fr;
+            }
+            .brand-panel {
+                display: none;
+            }
+        }
+
+        /* ================= BRAND PANEL ================= */
+
+        .brand-panel {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c3155 0%, #0b345a 50%, #092b4a 100%);
+            color: white;
+            padding: 40px 46px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .brand-panel::before {
+            content: "";
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244,183,59,.08) 0%, rgba(244,183,59,0) 70%);
+            top: -250px;
+            right: -250px;
+            pointer-events: none;
+        }
+
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,.035) 0%, rgba(255,255,255,0) 70%);
+            bottom: -220px;
+            left: -200px;
+            pointer-events: none;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: rgba(255,255,255,.09);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .brand-logo-fallback {
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 2;
+            max-width: 570px;
+            margin-top: -20px;
+        }
+
+        .brand-content h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(44px, 4.5vw, 58px);
+            font-weight: 600;
+            line-height: .95;
+            letter-spacing: -1.5px;
+            margin-bottom: 22px;
+            color: #ffffff;
+        }
+
+        .brand-content h1 .gold {
+            display: block;
+            color: var(--gold);
+        }
+
+        .brand-description {
+            max-width: 500px;
+            color: #d7e2ed;
+            font-size: 14px;
+            line-height: 1.65;
+            margin-bottom: 28px;
+        }
+
+        .trust-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .trust-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #dce6ef;
+            font-size: 13px;
+        }
+
+        .trust-icon {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .brand-footer {
+            position: relative;
+            z-index: 2;
+            color: #93a4ba;
+            font-size: 12px;
+        }
+
+        /* ================= FORM PANEL ================= */
+
+        .form-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            background: var(--white);
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-header {
+            margin-bottom: 28px;
+        }
+
+        .form-header h2 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-header p {
+            color: var(--muted);
+            font-size: 13.5px;
+        }
+
+        /* ROLE TABS */
+
+        .role-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 26px;
+            background: var(--cream);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .role-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 4px;
+            border: none;
+            background: transparent;
+            border-radius: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+        .role-tab .icon {
+            font-size: 13px;
+        }
+
+        .role-tab.active {
+            background: var(--navy);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        /* MESSAGE */
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            background: #fbeceb;
+            color: var(--error);
+            border: 1px solid #f3c9c6;
+        }
+
+        .message.success {
+            background: #e9f5f4;
+            color: var(--success);
+            border-color: #bfe1de;
+        }
+
+        /* FORM FIELDS */
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text);
+            background: var(--white);
+            transition: border-color .15s ease;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--navy-light);
+        }
+
+        .password-input {
+            padding-right: 40px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .hint {
+            font-size: 11.5px;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        /* SUBMIT */
+
+        .submit-button {
+            width: 100%;
+            margin-top: 6px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: var(--navy);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background .15s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--navy-light);
+        }
+
+        .arrow {
+            font-size: 15px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 22px 0 18px;
+        }
+
+        .account-link {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .account-link a {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .divider-or {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0 16px;
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .divider-or::before,
+        .divider-or::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .secondary-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 14px 20px;
+            border: 1.5px solid var(--navy);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--navy);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .secondary-button:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="signin-page">
+
+    <!-- ================= BRAND PANEL ================= -->
+
+    <section class="brand-panel">
+
+        <div class="brand">
+            <div class="brand-logo">
+                {% if school.logo_url %}
+                    <img src="{{ school.logo_url }}" alt="{{ school.name }} logo">
+                {% else %}
+                    <span class="brand-logo-fallback">
+                        {{ school.name[0] }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <span class="brand-name">
+                {{ school.name }}
+            </span>
+        </div>
+
+        <div class="brand-content">
+            <h1>
+                Create your
+                <span class="gold">account</span>
+            </h1>
+
+            <p class="brand-description">
+                {{ school.hero_blurb }} Register as a parent, teacher, or
+                administrator to get started.
+            </p>
+
+            <ul class="trust-list">
+                <li>
+                    <span class="trust-icon">✓</span>
+                    Passwords are securely hashed, never stored in plain text
+                </li>
+                <li>
+                    <span class="trust-icon">✓</span>
+                    Access is scoped to your role
+                </li>
+                <li>
+                    <span class="trust-icon">✓</span>
+                    {{ school.tagline }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="brand-footer">
+            &copy; {{ current_year }} {{ school.name }} &middot; {{ school.location }}
+        </div>
+
+    </section>
+
+    <!-- ================= FORM PANEL ================= -->
+
+    <section class="form-panel">
+
+        <div class="form-card">
+
+            <div class="form-header">
+                <h2>Create account</h2>
+                <p>Sign up to access {{ school.name }}</p>
+            </div>
+
+            <!-- ROLE TABS -->
+
+            <div class="role-tabs" id="roleTabs">
+
+                <button type="button" class="role-tab active" data-role="parent">
+                    <span class="icon">◆</span>
+                    <span>Parent</span>
+                </button>
+
+                <button type="button" class="role-tab" data-role="teacher">
+                    <span class="icon">▣</span>
+                    <span>Teacher</span>
+                </button>
+
+                <button type="button" class="role-tab" data-role="administrator">
+                    <span class="icon">⚐</span>
+                    <span>Administrator</span>
+                </button>
+
+            </div>
+
+            <!-- MESSAGE -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <!-- =========== REGISTER FORM =========== -->
+
+            <form id="registerForm" method="POST" action="/register">
+
+                <input type="hidden" name="role" id="roleInput" value="parent">
+
+                <div class="form-group">
+                    <label class="form-label" for="full_name">Full name</label>
+                    <div class="input-wrapper">
+                        <input
+                            class="input"
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Jane Doe"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email address</label>
+                    <div class="input-wrapper">
+                        <input
+                            class="input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="field-row">
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input
+                                class="input password-input"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="••••••••"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">◉</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm_password">Confirm</label>
+                        <div class="input-wrapper">
+                            <input
+                                class="input"
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="••••••••"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="hint">At least 8 characters.</p>
+
+                <button type="submit" class="submit-button" id="submitButton">
+                    <span id="submitText">Create parent account</span>
+                    <span class="arrow">→</span>
+                </button>
+
+            </form>
+
+            <div class="divider-or"><span>or</span></div>
+
+            <a href="/signin" class="secondary-button">
+                Already have an account? Sign in
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+
+    const roleTabs = document.querySelectorAll(".role-tab");
+    const roleInput = document.getElementById("roleInput");
+    const submitText = document.getElementById("submitText");
+
+    const roleLabels = {
+        parent: "Create parent account",
+        teacher: "Create teacher account",
+        administrator: "Create administrator account",
+    };
+
+    roleTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            roleTabs.forEach(item => item.classList.remove("active"));
+            tab.classList.add("active");
+
+            const role = tab.dataset.role;
+            roleInput.value = role;
+            submitText.textContent = roleLabels[role];
+        });
+    });
+
+    const passwordInput = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+
+    passwordToggle.addEventListener("click", () => {
+        passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+        passwordToggle.setAttribute(
+            "aria-label",
+            passwordInput.type === "password" ? "Show password" : "Hide password"
+        );
+    });
+
+</script>
+
+</body>
+</html>

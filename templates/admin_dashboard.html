@@ -1,0 +1,3020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Administrator Dashboard |
+        {{ school.name if school else "School Results Portal" }}
+    </title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+            --navy: #0d3155;
+            --navy-dark: #08233f;
+            --navy-light: #173f66;
+
+            --gold: #f4b73b;
+
+            --teal: #0e7478;
+
+            --white: #ffffff;
+
+            --background: #f5f7fa;
+
+            --border: #e3e8ef;
+
+            --text: #1d2939;
+
+            --muted: #667085;
+
+            --success: #16803c;
+
+            --danger: #d92d20;
+
+            --warning: #b7791f;
+
+            --shadow:
+                0 8px 30px rgba(16, 24, 40, .06);
+
+            --radius: 14px;
+        }
+
+
+        body {
+
+            font-family:
+                "Inter",
+                sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+            min-height:
+                100vh;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        button,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           MAIN LAYOUT
+        ===================================================== */
+
+        .admin-shell {
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .admin-sidebar {
+
+            width:
+                270px;
+
+            min-width:
+                270px;
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            position:
+                fixed;
+
+            left:
+                0;
+
+            top:
+                0;
+
+            bottom:
+                0;
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            z-index:
+                1000;
+
+            overflow-y:
+                auto;
+
+            transition:
+                .25s;
+        }
+
+
+        /* BRAND */
+
+        .admin-brand {
+
+            padding:
+                23px 20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .admin-brand-icon {
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(244,183,59,.13);
+
+            color:
+                var(--gold);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                19px;
+        }
+
+
+        .admin-brand h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                22px;
+
+            line-height:
+                1;
+        }
+
+
+        .admin-brand p {
+
+            color:
+                #9fb5c9;
+
+            font-size:
+                9px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+
+            margin-top:
+                5px;
+        }
+
+
+        /* =====================================================
+           ADMIN PROFILE
+        ===================================================== */
+
+        .admin-profile {
+
+            padding:
+                21px 20px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .admin-profile-main {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+        }
+
+
+        .admin-profile-image {
+
+            width:
+                50px;
+
+            height:
+                50px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                2px solid var(--gold);
+
+            background:
+                #244e73;
+        }
+
+
+        .admin-avatar {
+
+            width:
+                50px;
+
+            height:
+                50px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+            color:
+                var(--navy);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                18px;
+
+            font-weight:
+                800;
+        }
+
+
+        .admin-profile-info {
+
+            min-width:
+                0;
+        }
+
+
+        .admin-profile-info strong {
+
+            display:
+                block;
+
+            font-size:
+                13px;
+
+            color:
+                white;
+
+            white-space:
+                nowrap;
+
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+        }
+
+
+        .admin-profile-info span {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+            color:
+                #a9bdd0;
+
+            margin-top:
+                4px;
+        }
+
+
+        .admin-gender {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            margin-top:
+                9px;
+
+            padding:
+                4px 8px;
+
+            border-radius:
+                20px;
+
+            background:
+                rgba(244,183,59,.12);
+
+            color:
+                #ffd878;
+
+            font-size:
+                8px;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .admin-nav {
+
+            flex:
+                1;
+
+            padding:
+                15px 12px;
+        }
+
+
+        .nav-label {
+
+            padding:
+                11px 12px 7px;
+
+            color:
+                #7892ab;
+
+            font-size:
+                9px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1.3px;
+        }
+
+
+        .admin-nav-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                11px 12px;
+
+            color:
+                #c8d5e2;
+
+            border-radius:
+                8px;
+
+            font-size:
+                11px;
+
+            margin-bottom:
+                2px;
+
+            transition:
+                .2s;
+        }
+
+
+        .admin-nav-item i {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            font-size:
+                13px;
+        }
+
+
+        .admin-nav-item:hover {
+
+            background:
+                rgba(255,255,255,.07);
+
+            color:
+                white;
+        }
+
+
+        .admin-nav-item.active {
+
+            background:
+                var(--gold);
+
+            color:
+                var(--navy);
+
+            font-weight:
+                700;
+        }
+
+
+        .nav-badge {
+
+            margin-left:
+                auto;
+
+            min-width:
+                19px;
+
+            height:
+                19px;
+
+            border-radius:
+                50%;
+
+            background:
+                #e5484d;
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                8px;
+        }
+
+
+        /* SIDEBAR FOOTER */
+
+        .admin-sidebar-footer {
+
+            padding:
+                12px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+        }
+
+
+        .logout {
+
+            color:
+                #ffb8b8 !important;
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .admin-main {
+
+            width:
+                calc(100% - 270px);
+
+            margin-left:
+                270px;
+
+            min-height:
+                100vh;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .admin-header {
+
+            height:
+                76px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 32px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                100;
+        }
+
+
+        .header-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+        }
+
+
+        .mobile-menu {
+
+            display:
+                none;
+
+            background:
+                none;
+
+            border:
+                none;
+
+            color:
+                var(--navy);
+
+            font-size:
+                20px;
+
+            cursor:
+                pointer;
+        }
+
+
+        .eyebrow {
+
+            color:
+                var(--teal);
+
+            font-size:
+                9px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1.3px;
+
+            font-weight:
+                700;
+        }
+
+
+        .admin-header h1 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color:
+                var(--navy);
+
+            font-size:
+                30px;
+
+            margin-top:
+                2px;
+        }
+
+
+        .header-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+        }
+
+
+        .header-icon {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                9px;
+
+            background:
+                white;
+
+            color:
+                var(--muted);
+
+            cursor:
+                pointer;
+
+            position:
+                relative;
+        }
+
+
+        .notification-dot {
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            background:
+                #e5484d;
+
+            border-radius:
+                50%;
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            right:
+                8px;
+        }
+
+
+        .header-admin {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            padding-left:
+                7px;
+        }
+
+
+        .header-admin img {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+        }
+
+
+        .header-admin strong {
+
+            display:
+                block;
+
+            font-size:
+                10px;
+        }
+
+
+        .header-admin span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                3px;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .admin-content {
+
+            padding:
+                30px 32px 50px;
+        }
+
+
+        .welcome-row {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-end;
+
+            margin-bottom:
+                24px;
+        }
+
+
+        .welcome h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color:
+                var(--navy);
+
+            font-size:
+                34px;
+        }
+
+
+        .welcome p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            margin-top:
+                5px;
+        }
+
+
+        .date-box {
+
+            padding:
+                9px 13px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                9px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                16px;
+
+            margin-bottom:
+                22px;
+        }
+
+
+        .stat-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                19px;
+
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        .stat-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+        }
+
+
+        .stat-icon {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            border-radius:
+                10px;
+
+            background:
+                #fff5d8;
+
+            color:
+                #bd850e;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+        }
+
+
+        .stat-number {
+
+            color:
+                var(--navy);
+
+            font-size:
+                27px;
+
+            font-weight:
+                800;
+
+            margin-top:
+                14px;
+        }
+
+
+        .stat-title {
+
+            color:
+                var(--muted);
+
+            font-size:
+                10px;
+
+            margin-top:
+                3px;
+        }
+
+
+        .stat-change {
+
+            color:
+                var(--success);
+
+            font-size:
+                8px;
+
+            margin-top:
+                8px;
+        }
+
+
+        /* =====================================================
+           DASHBOARD GRID
+        ===================================================== */
+
+        .dashboard-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.6fr 1fr;
+
+            gap:
+                20px;
+        }
+
+
+        .panel {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            box-shadow:
+                var(--shadow);
+
+            overflow:
+                hidden;
+        }
+
+
+        .panel-header {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+        }
+
+
+        .panel-header h3 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color:
+                var(--navy);
+
+            font-size:
+                23px;
+        }
+
+
+        .view-all {
+
+            color:
+                var(--teal);
+
+            font-size:
+                9px;
+
+            font-weight:
+                700;
+        }
+
+
+        .panel-body {
+
+            padding:
+                18px 20px;
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .quick-actions {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                12px;
+        }
+
+
+        .quick-action {
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                10px;
+
+            padding:
+                15px;
+
+            color:
+                var(--navy);
+
+            transition:
+                .2s;
+        }
+
+
+        .quick-action:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 5px 16px rgba(0,0,0,.05);
+        }
+
+
+        .quick-action i {
+
+            color:
+                var(--teal);
+
+            font-size:
+                18px;
+
+            margin-bottom:
+                9px;
+        }
+
+
+        .quick-action strong {
+
+            display:
+                block;
+
+            font-size:
+                10px;
+        }
+
+
+        .quick-action span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                4px;
+
+            line-height:
+                1.5;
+        }
+
+
+        /* =====================================================
+           APPROVALS
+        ===================================================== */
+
+        .approval-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                12px 0;
+
+            border-bottom:
+                1px solid #edf0f3;
+        }
+
+
+        .approval-item:last-child {
+            border-bottom:
+                none;
+        }
+
+
+        .student-info {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            min-width:
+                0;
+        }
+
+
+        .student-avatar {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            border-radius:
+                50%;
+
+            background:
+                #edf4f8;
+
+            color:
+                var(--navy);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+        }
+
+
+        .student-info strong {
+
+            display:
+                block;
+
+            font-size:
+                10px;
+        }
+
+
+        .student-info span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                3px;
+        }
+
+
+        .approve-btn {
+
+            border:
+                none;
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            border-radius:
+                7px;
+
+            padding:
+                7px 10px;
+
+            font-size:
+                8px;
+
+            cursor:
+                pointer;
+
+            white-space:
+                nowrap;
+        }
+
+
+        .approve-btn:hover {
+            background:
+                var(--teal);
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile-card {
+
+            display:
+                flex;
+
+            gap:
+                14px;
+
+            align-items:
+                center;
+        }
+
+
+        .profile-card img {
+
+            width:
+                70px;
+
+            height:
+                70px;
+
+            object-fit:
+                cover;
+
+            border-radius:
+                50%;
+
+            border:
+                3px solid #edf1f5;
+        }
+
+
+        .profile-card h3 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color:
+                var(--navy);
+
+            font-size:
+                24px;
+        }
+
+
+        .profile-card p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            margin-top:
+                3px;
+        }
+
+
+        .profile-tags {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+            margin-top:
+                8px;
+        }
+
+
+        .profile-tag {
+
+            padding:
+                4px 8px;
+
+            border-radius:
+                20px;
+
+            background:
+                #f3f5f7;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+        }
+
+
+        .profile-button {
+
+            display:
+                inline-flex;
+
+            margin-top:
+                12px;
+
+            padding:
+                8px 11px;
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            border-radius:
+                7px;
+
+            font-size:
+                8px;
+        }
+
+
+        /* =====================================================
+           ACTIVITY
+        ===================================================== */
+
+        .activity-item {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                11px 0;
+
+            border-bottom:
+                1px solid #edf0f3;
+        }
+
+
+        .activity-item:last-child {
+            border-bottom:
+                none;
+        }
+
+
+        .activity-icon {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border-radius:
+                8px;
+
+            background:
+                #eef5f7;
+
+            color:
+                var(--teal);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                11px;
+        }
+
+
+        .activity-text strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+        }
+
+
+        .activity-text span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+            margin-top:
+                3px;
+        }
+
+
+        /* =====================================================
+           ANNOUNCEMENT
+        ===================================================== */
+
+        .announcement {
+
+            padding:
+                13px;
+
+            background:
+                #fffaf0;
+
+            border:
+                1px solid #f6e3b0;
+
+            border-radius:
+                9px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .announcement:last-child {
+            margin-bottom:
+                0;
+        }
+
+
+        .announcement strong {
+
+            display:
+                block;
+
+            color:
+                var(--navy);
+
+            font-size:
+                10px;
+        }
+
+
+        .announcement p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            line-height:
+                1.5;
+
+            margin-top:
+                5px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 1150px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .dashboard-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media(max-width: 800px) {
+
+            .admin-sidebar {
+
+                transform:
+                    translateX(-100%);
+            }
+
+
+            .admin-sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+
+            .admin-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+            }
+
+
+            .mobile-menu {
+
+                display:
+                    block;
+            }
+
+
+            .admin-header {
+
+                padding:
+                    0 18px;
+            }
+
+
+            .admin-content {
+
+                padding:
+                    22px 18px 40px;
+            }
+
+
+            .header-admin-info {
+
+                display:
+                    none;
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .quick-actions {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .welcome-row {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap:
+                    12px;
+            }
+
+
+            .header-admin {
+
+                display:
+                    none;
+            }
+
+
+            .admin-header h1 {
+
+                font-size:
+                    25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="admin-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="admin-sidebar"
+        id="adminSidebar"
+    >
+
+
+        <!-- BRAND -->
+
+        <div class="admin-brand">
+
+            <div class="admin-brand-icon">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Admin Portal
+                </h2>
+
+                <p>
+                    School Administration
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="admin-profile">
+
+            <div class="admin-profile-main">
+
+
+                {% if admin_image %}
+
+                    <img
+                        src="{{ admin_image }}"
+                        alt="Administrator"
+                        class="admin-profile-image"
+                    >
+
+                {% else %}
+
+                    <div class="admin-avatar">
+
+                        {{ admin_name[:1]|upper
+                           if admin_name
+                           else "A" }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="admin-profile-info">
+
+                    <strong>
+
+                        {{ admin_name
+                           if admin_name
+                           else "Administrator" }}
+
+                    </strong>
+
+                    <span>
+
+                        {{ admin_email
+                           if admin_email
+                           else "admin@school.ac.ke" }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <span class="admin-gender">
+
+                <i class="fa-solid fa-user"></i>
+
+                {{ admin_gender
+                   if admin_gender
+                   else "Gender not set" }}
+
+            </span>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="admin-nav">
+
+
+            <div class="nav-label">
+                Overview
+            </div>
+
+
+            <a
+                href="/admin/dashboard"
+                class="admin-nav-item active"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+
+
+            <div class="nav-label">
+                School Management
+            </div>
+
+
+            <a
+                href="/admin/teachers"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-chalkboard-user"></i>
+
+                Teachers
+
+                <span class="nav-badge">
+                    {{ teacher_count if teacher_count is defined else "0" }}
+                </span>
+
+            </a>
+
+
+            <a
+                href="/admin/learners"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                Learners
+
+            </a>
+
+
+            <a
+                href="/admin/parents"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-users"></i>
+
+                Parents
+
+            </a>
+
+
+            <a
+                href="/admin/classes"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-school"></i>
+
+                Classes & Streams
+
+            </a>
+
+
+            <a
+                href="/admin/subjects"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Subjects
+
+            </a>
+
+
+
+            <div class="nav-label">
+                Academics
+            </div>
+
+
+            <a
+                href="/admin/results"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-clipboard-check"></i>
+
+                Results Approval
+
+                {% if pending_records %}
+
+                    <span class="nav-badge">
+                        {{ pending_records|length }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <a
+                href="/admin/analytics"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Academic Analytics
+
+            </a>
+
+
+            <a
+                href="/admin/reports"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                Reports
+
+            </a>
+
+
+
+            <div class="nav-label">
+                Communication
+            </div>
+
+
+            <a
+                href="/admin/announcements"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-bullhorn"></i>
+
+                Announcements
+
+            </a>
+
+
+            <a
+                href="/admin/messages"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-comments"></i>
+
+                Messages
+
+            </a>
+
+
+            <a
+                href="/admin/notifications"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-bell"></i>
+
+                Notifications
+
+                <span class="nav-badge">
+                    5
+                </span>
+
+            </a>
+
+
+
+            <div class="nav-label">
+                Administration
+            </div>
+
+
+            <a
+                href="/admin/profile"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                My Profile
+
+            </a>
+
+
+            <a
+                href="/admin/settings"
+                class="admin-nav-item"
+            >
+
+                <i class="fa-solid fa-gear"></i>
+
+                System Settings
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- LOGOUT -->
+
+        <div class="admin-sidebar-footer">
+
+            <a
+                href="/admin/logout"
+                class="admin-nav-item logout"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- HEADER -->
+
+        <header class="admin-header">
+
+
+            <div class="header-left">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleAdminSidebar()"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        School Management System
+                    </p>
+
+                    <h1>
+                        Administrator Dashboard
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="header-actions">
+
+
+                <button
+                    class="header-icon"
+                    onclick="location.href='/admin/notifications'"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <button
+                    class="header-icon"
+                    onclick="location.href='/admin/messages'"
+                >
+
+                    <i class="fa-regular fa-comment-dots"></i>
+
+                </button>
+
+
+                <div class="header-admin">
+
+
+                    {% if admin_image %}
+
+                        <img
+                            src="{{ admin_image }}"
+                            alt="Administrator"
+                        >
+
+                    {% else %}
+
+                        <div class="admin-avatar">
+
+                            {{ admin_name[:1]|upper
+                               if admin_name
+                               else "A" }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="header-admin-info">
+
+                        <strong>
+
+                            {{ admin_name
+                               if admin_name
+                               else "Administrator" }}
+
+                        </strong>
+
+                        <span>
+                            System Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CONTENT
+        ====================================================== -->
+
+        <section class="admin-content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-row">
+
+                <div class="welcome">
+
+                    <h2>
+
+                        Welcome,
+                        {{ admin_name
+                           if admin_name
+                           else "Administrator" }}
+
+                    </h2>
+
+                    <p>
+                        Monitor your school, manage users,
+                        approve results and oversee academic
+                        operations.
+                    </p>
+
+                </div>
+
+
+                <div class="date-box">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    {{ current_date
+                       if current_date
+                       else "Academic Year 2026" }}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <div class="stats-grid">
+
+
+                <!-- TEACHERS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                {{ teacher_count
+                                   if teacher_count is defined
+                                   else "0" }}
+
+                            </div>
+
+                            <div class="stat-title">
+                                Teachers
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-chalkboard-user"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-change">
+                        Registered teaching staff
+                    </div>
+
+                </div>
+
+
+
+                <!-- LEARNERS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                {{ student_count
+                                   if student_count is defined
+                                   else "0" }}
+
+                            </div>
+
+                            <div class="stat-title">
+                                Learners
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-user-graduate"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-change">
+                        Active learner records
+                    </div>
+
+                </div>
+
+
+
+                <!-- ADMINS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                {{ admin_count
+                                   if admin_count is defined
+                                   else "0" }}
+
+                            </div>
+
+                            <div class="stat-title">
+                                Administrators
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-change">
+                        System administrators
+                    </div>
+
+                </div>
+
+
+
+                <!-- PENDING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <div>
+
+                            <div class="stat-number">
+
+                                {{ pending_records|length
+                                   if pending_records
+                                   else "0" }}
+
+                            </div>
+
+                            <div class="stat-title">
+                                Pending Results
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-hourglass-half"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-change">
+                        Awaiting approval
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 GRID
+            ================================================== -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- LEFT -->
+
+                <div>
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Administration Tools
+                            </h3>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="quick-actions">
+
+
+                                <a
+                                    href="/admin/teachers"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-user-plus"></i>
+
+                                    <strong>
+                                        Manage Teachers
+                                    </strong>
+
+                                    <span>
+                                        Add, edit and manage
+                                        teacher accounts.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/admin/learners"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-user-graduate"></i>
+
+                                    <strong>
+                                        Manage Learners
+                                    </strong>
+
+                                    <span>
+                                        View and manage learner
+                                        records.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/admin/classes"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-school"></i>
+
+                                    <strong>
+                                        Manage Classes
+                                    </strong>
+
+                                    <span>
+                                        Organise classes and
+                                        streams.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/admin/results"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-clipboard-check"></i>
+
+                                    <strong>
+                                        Approve Results
+                                    </strong>
+
+                                    <span>
+                                        Review teacher-submitted
+                                        results.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/admin/reports"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-file-lines"></i>
+
+                                    <strong>
+                                        Generate Reports
+                                    </strong>
+
+                                    <span>
+                                        Create school academic
+                                        reports.
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="/admin/settings"
+                                    class="quick-action"
+                                >
+
+                                    <i class="fa-solid fa-gear"></i>
+
+                                    <strong>
+                                        System Settings
+                                    </strong>
+
+                                    <span>
+                                        Configure the school
+                                        portal.
+                                    </span>
+
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PENDING RESULTS -->
+
+                    <div
+                        class="panel"
+                        style="margin-top:20px"
+                    >
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Pending Result Approvals
+                            </h3>
+
+                            <a
+                                href="/admin/results"
+                                class="view-all"
+                            >
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            {% if pending_records %}
+
+
+                                {% for record in pending_records %}
+
+                                    <div class="approval-item">
+
+
+                                        <div class="student-info">
+
+                                            <div class="student-avatar">
+
+                                                {{ record.student_name[:1]|upper }}
+
+                                            </div>
+
+
+                                            <div>
+
+                                                <strong>
+
+                                                    {{ record.student_name }}
+
+                                                </strong>
+
+                                                <span>
+
+                                                    {{ record.admission_number }}
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <form
+                                            method="post"
+                                            action="/admin/dashboard"
+                                        >
+
+                                            <input
+                                                type="hidden"
+                                                name="action"
+                                                value="publish_result"
+                                            >
+
+
+                                            <input
+                                                type="hidden"
+                                                name="admission_number"
+                                                value="{{ record.admission_number }}"
+                                            >
+
+
+                                            <button
+                                                type="submit"
+                                                class="approve-btn"
+                                            >
+
+                                                Approve
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                {% endfor %}
+
+
+                            {% else %}
+
+                                <p style="
+                                    color:#667085;
+                                    font-size:11px;
+                                ">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    No results are currently
+                                    awaiting approval.
+
+                                </p>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- RIGHT -->
+
+                <div>
+
+
+                    <!-- ADMIN PROFILE -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                My Profile
+                            </h3>
+
+                            <a
+                                href="/admin/profile"
+                                class="view-all"
+                            >
+                                Edit
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="profile-card">
+
+
+                                {% if admin_image %}
+
+                                    <img
+                                        src="{{ admin_image }}"
+                                        alt="{{ admin_name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="admin-avatar">
+
+                                        {{ admin_name[:1]|upper
+                                           if admin_name
+                                           else "A" }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div>
+
+                                    <h3>
+
+                                        {{ admin_name
+                                           if admin_name
+                                           else "Administrator" }}
+
+                                    </h3>
+
+
+                                    <p>
+
+                                        {{ admin_email
+                                           if admin_email
+                                           else "admin@school.ac.ke" }}
+
+                                    </p>
+
+
+                                    <div class="profile-tags">
+
+                                        <span class="profile-tag">
+
+                                            <i class="fa-solid fa-user"></i>
+
+                                            {{ admin_gender
+                                               if admin_gender
+                                               else "Gender" }}
+
+                                        </span>
+
+
+                                        <span class="profile-tag">
+
+                                            <i class="fa-solid fa-shield-halved"></i>
+
+                                            Administrator
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <a
+                                        href="/admin/profile"
+                                        class="profile-button"
+                                    >
+
+                                        Manage Profile
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SYSTEM ACTIVITY -->
+
+                    <div
+                        class="panel"
+                        style="margin-top:20px"
+                    >
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Recent Activity
+                            </h3>
+
+                            <a
+                                href="/admin/activity"
+                                class="view-all"
+                            >
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+
+                                    <i class="fa-solid fa-user-plus"></i>
+
+                                </div>
+
+                                <div class="activity-text">
+
+                                    <strong>
+                                        New teacher registered
+                                    </strong>
+
+                                    <span>
+                                        Teacher account created
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+
+                                    <i class="fa-solid fa-clipboard-check"></i>
+
+                                </div>
+
+                                <div class="activity-text">
+
+                                    <strong>
+                                        Results submitted
+                                    </strong>
+
+                                    <span>
+                                        Teacher submitted CBC results
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+
+                                    <i class="fa-solid fa-bullhorn"></i>
+
+                                </div>
+
+                                <div class="activity-text">
+
+                                    <strong>
+                                        Announcement published
+                                    </strong>
+
+                                    <span>
+                                        School announcement updated
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ANNOUNCEMENTS -->
+
+                    <div
+                        class="panel"
+                        style="margin-top:20px"
+                    >
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Announcements
+                            </h3>
+
+                            <a
+                                href="/admin/announcements"
+                                class="view-all"
+                            >
+                                Manage
+                            </a>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            {% if announcements %}
+
+
+                                {% for item in announcements %}
+
+                                    <div class="announcement">
+
+                                        <strong>
+
+                                            {{ item.title }}
+
+                                        </strong>
+
+                                        <p>
+
+                                            {{ item.body }}
+
+                                        </p>
+
+                                    </div>
+
+                                {% endfor %}
+
+
+                            {% else %}
+
+                                <p style="
+                                    color:#667085;
+                                    font-size:10px;
+                                ">
+
+                                    No announcements published yet.
+
+                                </p>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    function toggleAdminSidebar() {
+
+        const sidebar =
+            document.getElementById("adminSidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+
+    /* Close sidebar after clicking a link on mobile */
+
+    document
+        .querySelectorAll(".admin-sidebar a")
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    if (window.innerWidth <= 800) {
+
+                        document
+                            .getElementById("adminSidebar")
+                            .classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+
+</script>
+
+
+</body>
+
+</html>

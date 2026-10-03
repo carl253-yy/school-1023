@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ school.name }} | {{ school.location }}
+    </title>
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         PAGE CSS
+         Everything is contained inside this index.html
+    ====================================================== -->
+
+    <style>
+
+        /* =================================================
+           GLOBAL
+        ================================================= */
+
+        :root {
+            --navy: #0d3f6f;
+            --navy-dark: #06294a;
+
+            --gold: #f4b73b;
+            --gold-light: #ffd166;
+
+            --teal: #0e6b6f;
+
+            --white: #ffffff;
+            --cream: #faf9f5;
+
+            --text: #172033;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --shadow:
+                0 20px 50px rgba(0, 0, 0, 0.10);
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: "Inter", sans-serif;
+
+            background: var(--cream);
+
+            color: var(--text);
+
+            line-height: 1.6;
+        }
+
+
+        a {
+            text-decoration: none;
+
+            color: inherit;
+        }
+
+
+        /* =================================================
+           NAVIGATION
+        ================================================= */
+
+        .topbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            width: 100%;
+
+            min-height: 76px;
+
+            padding: 0 6%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background:
+                rgba(255, 255, 255, 0.97);
+
+            border-bottom:
+                1px solid var(--border);
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,.04);
+
+        }
+
+
+        /* =================================================
+           BRAND
+        ================================================= */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 0;
+        }
+
+
+        .brand-mark {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background: var(--navy);
+
+            flex-shrink: 0;
+        }
+
+
+        .brand-mark img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            padding: 4px;
+        }
+
+
+        .brand-fallback {
+
+            color: var(--gold);
+
+            font-size: 23px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-name {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: var(--navy);
+
+            white-space: nowrap;
+        }
+
+
+        .brand-sub {
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =================================================
+           NAVIGATION LINKS
+        ================================================= */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .nav-links > a {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #526174;
+
+            padding: 10px 12px;
+
+            transition: .2s ease;
+        }
+
+
+        .nav-links > a:hover {
+
+            color: var(--navy);
+        }
+
+
+        /* =================================================
+           BUTTONS
+        ================================================= */
+
+        .btn-outline {
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: var(--navy) !important;
+        }
+
+
+        .btn-outline:hover {
+
+            border-color: var(--navy);
+
+            background: #f8fafc;
+        }
+
+
+        .btn-gold {
+
+            border-radius: 7px;
+
+            background: var(--gold);
+
+            color: #182438 !important;
+
+            font-weight: 800 !important;
+        }
+
+
+        .btn-gold:hover {
+
+            background: var(--gold-light);
+
+            transform: translateY(-1px);
+        }
+
+
+        .btn-admin {
+
+            border-radius: 7px;
+
+            background: var(--navy);
+
+            color: white !important;
+
+            font-weight: 700 !important;
+        }
+
+
+        .btn-admin:hover {
+
+            background: var(--navy-dark);
+        }
+
+
+        /* =================================================
+           HERO
+        ================================================= */
+
+        .hero {
+
+            min-height: 650px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            background-image:
+                url("{{ school.hero_image }}");
+
+            background-size: cover;
+
+            background-position: center;
+        }
+
+
+        /* Dark image overlay */
+
+        .overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+
+                    rgba(4, 25, 46, .96) 0%,
+
+                    rgba(5, 42, 73, .90) 45%,
+
+                    rgba(5, 42, 73, .55) 75%,
+
+                    rgba(5, 42, 73, .35) 100%
+                );
+        }
+
+
+        /* =================================================
+           HERO CONTENT
+        ================================================= */
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1180px, 88%);
+
+            margin: auto;
+
+            padding: 80px 0;
+        }
+
+
+        .welcome {
+
+            color: var(--gold);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h1 {
+
+            max-width: 780px;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(55px, 7vw, 88px);
+
+            line-height: .92;
+
+            letter-spacing: -2px;
+
+            color: white;
+
+            margin-bottom: 30px;
+        }
+
+
+        .hero h1 span {
+
+            display: block;
+        }
+
+
+        .hero h1 .accent {
+
+            color: var(--gold);
+        }
+
+
+        .hero h1 .town {
+
+            color: white;
+        }
+
+
+        .description {
+
+            max-width: 650px;
+
+            color: #d5e0eb;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin-bottom: 32px;
+        }
+
+
+        /* =================================================
+           CTA
+        ================================================= */
+
+        .cta-row {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .btn-secondary {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 13px 22px;
+
+            border:
+                1px solid rgba(255,255,255,.35);
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+
+        .btn-secondary:hover {
+
+            background:
+                rgba(255,255,255,.16);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =================================================
+           HERO INFORMATION
+        ================================================= */
+
+        .hero-features {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 25px;
+
+            margin-top: 35px;
+
+            color: #c5d2df;
+
+            font-size: 13px;
+        }
+
+
+        .hero-features span {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .hero-features strong {
+
+            color: var(--gold);
+        }
+
+
+        /* =================================================
+           TRUST BAR
+        ================================================= */
+
+        .trust-bar {
+
+            min-height: 95px;
+
+            background: white;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            padding: 20px 8%;
+        }
+
+
+        .trust-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+        }
+
+
+        .trust-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #eef6f5;
+
+            color: var(--teal);
+
+            font-weight: 800;
+        }
+
+
+        .trust-item strong {
+
+            display: block;
+
+            color: var(--navy);
+
+            font-size: 13px;
+        }
+
+
+        .trust-item small {
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        /* =================================================
+           RESULTS SECTION
+        ================================================= */
+
+        .results-section {
+
+            padding: 90px 7%;
+        }
+
+
+        .results-card {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .results-info {
+
+            padding: 55px;
+        }
+
+
+        .section-label {
+
+            color: #b77b00;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .results-info h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color: var(--navy);
+
+            font-size: 46px;
+
+            line-height: 1;
+
+            margin-bottom: 18px;
+        }
+
+
+        .results-info p {
+
+            color: var(--muted);
+
+            max-width: 500px;
+
+            font-size: 15px;
+        }
+
+
+        .security {
+
+            margin-top: 25px;
+
+            display: flex;
+
+            gap: 8px;
+
+            align-items: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        .results-form {
+
+            padding: 55px;
+
+            background: #f5f7fa;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .results-form form {
+
+            width: 100%;
+        }
+
+
+        .results-form label {
+
+            display: block;
+
+            color: var(--navy);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+
+        .results-form input {
+
+            width: 100%;
+
+            height: 53px;
+
+            padding: 0 15px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            background: white;
+        }
+
+
+        .results-form input:focus {
+
+            border-color: var(--navy);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(13,63,111,.08);
+        }
+
+
+        .check-button {
+
+            width: 100%;
+
+            height: 53px;
+
+            margin-top: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: var(--navy);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .check-button:hover {
+
+            background: var(--navy-dark);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =================================================
+           FEATURES
+        ================================================= */
+
+        .features-section {
+
+            padding: 20px 7% 90px;
+
+            background: white;
+        }
+
+
+        .section-heading {
+
+            max-width: 680px;
+
+            margin: auto;
+
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .section-heading h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color: var(--navy);
+
+            font-size: 48px;
+
+            line-height: 1;
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-heading p {
+
+            color: var(--muted);
+
+            font-size: 15px;
+        }
+
+
+        .feature-grid {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .feature-card {
+
+            padding: 30px;
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 15px;
+
+            transition: .25s ease;
+        }
+
+
+        .feature-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(15,23,42,.08);
+        }
+
+
+        .feature-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #edf4fa;
+
+            font-size: 25px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .feature-card h3 {
+
+            color: var(--navy);
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .feature-card p {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =================================================
+           PORTALS
+        ================================================= */
+
+        .portal-section {
+
+            padding: 85px 7%;
+
+            background: var(--navy);
+        }
+
+
+        .portal-heading {
+
+            text-align: center;
+
+            color: white;
+
+            margin-bottom: 45px;
+        }
+
+
+        .portal-heading .section-label {
+
+            color: var(--gold);
+        }
+
+
+        .portal-heading h2 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 48px;
+
+            line-height: 1;
+
+            margin-bottom: 10px;
+        }
+
+
+        .portal-heading p {
+
+            color: #b8c7d6;
+        }
+
+
+        .portal-grid {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .portal-card {
+
+            padding: 30px;
+
+            border:
+                1px solid rgba(255,255,255,.13);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            color: white;
+
+            transition: .2s ease;
+        }
+
+
+        .portal-card:hover {
+
+            transform: translateY(-4px);
+
+            background:
+                rgba(255,255,255,.09);
+        }
+
+
+        .portal-icon {
+
+            font-size: 29px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .portal-card h3 {
+
+            font-size: 19px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .portal-card p {
+
+            color: #b8c7d6;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+        }
+
+
+        .portal-link {
+
+            color: var(--gold);
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        /* =================================================
+           FOOTER
+        ================================================= */
+
+        footer {
+
+            background: #06192d;
+
+            color: #aebdcc;
+
+            padding: 40px 7%;
+        }
+
+
+        .footer-container {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+
+        .footer-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 21px;
+
+            font-weight: 700;
+        }
+
+
+        .footer-brand img {
+
+            width: 36px;
+
+            height: 36px;
+
+            object-fit: contain;
+
+            background: white;
+
+            border-radius: 6px;
+        }
+
+
+        .footer-description {
+
+            margin-top: 6px;
+
+            color: #7f92a6;
+
+            font-size: 12px;
+        }
+
+
+        .footer-links {
+
+            display: flex;
+
+            gap: 20px;
+
+            font-size: 12px;
+        }
+
+
+        .footer-links a:hover {
+
+            color: white;
+        }
+
+
+        .copyright {
+
+            max-width: 1100px;
+
+            margin: 30px auto 0;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+            color: #718398;
+
+            font-size: 11px;
+        }
+
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+
+        @media (max-width: 1000px) {
+
+            .nav-links {
+
+                gap: 5px;
+            }
+
+
+            .nav-links > a {
+
+                padding: 8px;
+            }
+
+
+            .hero-content {
+
+                width: 90%;
+            }
+
+
+            .results-card {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .feature-grid,
+            .portal-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .topbar {
+
+                min-height: 70px;
+
+                padding: 10px 5%;
+            }
+
+
+            .brand-name {
+
+                font-size: 17px;
+            }
+
+
+            .brand-sub {
+
+                font-size: 8px;
+            }
+
+
+            .brand-mark {
+
+                width: 42px;
+
+                height: 42px;
+            }
+
+
+            .nav-links {
+
+                display: none;
+            }
+
+
+            .hero {
+
+                min-height: 600px;
+            }
+
+
+            .hero-content {
+
+                padding: 65px 0;
+            }
+
+
+            .hero h1 {
+
+                font-size: 52px;
+
+                letter-spacing: -1px;
+            }
+
+
+            .description {
+
+                font-size: 15px;
+            }
+
+
+            .hero-features {
+
+                flex-direction: column;
+
+                gap: 8px;
+            }
+
+
+            .trust-bar {
+
+                grid-template-columns: 1fr;
+
+                gap: 18px;
+
+                padding: 25px;
+            }
+
+
+            .results-section {
+
+                padding: 55px 5%;
+            }
+
+
+            .results-info,
+            .results-form {
+
+                padding: 30px;
+            }
+
+
+            .results-info h2 {
+
+                font-size: 38px;
+            }
+
+
+            .section-heading h2,
+            .portal-heading h2 {
+
+                font-size: 38px;
+            }
+
+
+            .footer-container {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .footer-links {
+
+                flex-wrap: wrap;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .hero h1 {
+
+                font-size: 43px;
+            }
+
+
+            .welcome {
+
+                font-size: 10px;
+
+                letter-spacing: 2px;
+            }
+
+
+            .cta-row {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .btn-secondary {
+
+                width: 100%;
+            }
+
+
+            .results-info h2 {
+
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+====================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+
+            {% if school.logo_url %}
+
+                <img
+                    src="{{ school.logo_url }}"
+                    alt="{{ school.name }} Logo"
+                >
+
+            {% else %}
+
+                <span class="brand-fallback">
+                    ✚
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-name">
+                {{ school.name }}
+            </div>
+
+            <div class="brand-sub">
+                {{ school.location }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="#results">
+            Check Results
+        </a>
+
+       
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<main class="hero">
+
+    <div class="overlay"></div>
+
+
+    <section class="hero-content">
+
+        <p class="welcome">
+            ✦ WELCOME TO
+        </p>
+
+
+        <h1>
+
+            <span>
+                {{ school.name }}
+            </span>
+
+            <span class="accent">
+                CBC Assessment
+            </span>
+
+            <span class="town">
+                Tracker
+            </span>
+
+        </h1>
+
+
+        <p class="description">
+
+            {{ school.hero_blurb }}
+
+        </p>
+
+
+        <div class="cta-row">
+
+            <a
+                class="btn-gold"
+                href="#results"
+                style="
+                    display:inline-flex;
+                    align-items:center;
+                    padding:13px 22px;
+                "
+            >
+                Check Learner Results →
+            </a>
+
+
+            <a
+                class="btn-secondary"
+                href="/signin"
+            >
+                Unified Sign In
+            </a>
+        </div>
+
+
+        <div class="hero-features">
+
+            <span>
+                <strong>✓</strong>
+                Secure records
+            </span>
+
+            <span>
+                <strong>✓</strong>
+                CBC ready
+            </span>
+
+            <span>
+                <strong>✓</strong>
+                Parent friendly
+            </span>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     TRUST BAR
+====================================================== -->
+
+<section class="trust-bar">
+
+    <div class="trust-item">
+
+        <span class="trust-icon">
+            ✓
+        </span>
+
+        <div>
+
+            <strong>
+                Secure
+            </strong>
+
+            <small>
+                Academic records
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="trust-item">
+
+        <span class="trust-icon">
+            ◉
+        </span>
+
+        <div>
+
+            <strong>
+                CBC Ready
+            </strong>
+
+            <small>
+                Built for Kenya
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="trust-item">
+
+        <span class="trust-icon">
+            ⚡
+        </span>
+
+        <div>
+
+            <strong>
+                Fast
+            </strong>
+
+            <small>
+                Results access
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RESULTS
+====================================================== -->
+
+<section
+    class="results-section"
+    id="results"
+>
+
+    <div class="results-card">
+
+
+        <div class="results-info">
+
+            <p class="section-label">
+                RESULTS PORTAL
+            </p>
+
+
+            <h2>
+                Check a learner's results
+            </h2>
+
+
+            <p>
+
+                Enter the learner's assessment number
+                to securely access published academic
+                results.
+
+            </p>
+
+
+            <div class="security">
+
+                🔒
+
+                <span>
+                    Records are verified against the
+                    school register.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="results-form">
+
+            <form
+                action="/check-results"
+                method="GET"
+            >
+
+                <label for="assessment_number">
+                    Assessment Number
+                </label>
+
+
+                <input
+                    type="text"
+                    id="assessment_number"
+                    name="assessment_number"
+                    placeholder="e.g. 20265512345"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="check-button"
+                >
+
+                    🔍
+                    View Results
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURES
+====================================================== -->
+
+<section class="features-section">
+
+    <div class="section-heading">
+
+        <p class="section-label">
+            HOW IT WORKS
+        </p>
+
+
+        <h2>
+            Simple for everyone.
+        </h2>
+
+
+        <p>
+
+            A connected platform designed to make
+            academic assessment easier to manage,
+            understand and share.
+
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Smart Assessment
+            </h3>
+
+            <p>
+
+                Teachers can record learner assessments
+                and track academic progress throughout
+                the school year.
+
+            </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h3>
+                Digital Reports
+            </h3>
+
+            <p>
+
+                Generate professional learner reports
+                that parents can access securely.
+
+            </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                📈
+            </div>
+
+            <h3>
+                Performance Analytics
+            </h3>
+
+            <p>
+
+                Turn assessment information into useful
+                insights for teachers and school leaders.
+
+            </p>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     USER PORTALS
+====================================================== -->
+
+<section class="portal-section">
+
+    <div class="portal-heading">
+
+        <p class="section-label">
+            ONE CONNECTED PLATFORM
+        </p>
+
+
+        <h2>
+            Built for your whole school.
+        </h2>
+
+
+        <p>
+            Everyone gets the tools they need.
+        </p>
+
+    </div>
+
+
+    <div class="portal-grid">
+
+
+        <!-- PARENT -->
+
+        <div class="portal-card">
+
+            <div class="portal-icon">
+                👨‍👩‍👧
+            </div>
+
+
+            <h3>
+                For Parents
+            </h3>
+
+
+            <p>
+
+                View learner results and follow
+                academic progress from anywhere.
+
+            </p>
+
+
+            <a
+                href="#results"
+                class="portal-link"
+            >
+                Check results →
+            </a>
+
+        </div>
+
+
+
+        <!-- TEACHER -->
+
+        <div class="portal-card">
+
+            <div class="portal-icon">
+                👨‍🏫
+            </div>
+
+
+            <h3>
+                For Teachers
+            </h3>
+
+
+            <p>
+
+                Manage assessments, classes and
+                learner performance from one place.
+
+            </p>
+
+
+            <a
+                href="/teacher/login"
+                class="portal-link"
+            >
+                Teacher sign in →
+            </a>
+
+        </div>
+
+
+
+        <!-- ADMIN -->
+
+        <div class="portal-card">
+
+            <div class="portal-icon">
+                🏫
+            </div>
+
+
+            <h3>
+                For Administrators
+            </h3>
+
+
+            <p>
+
+                Manage your school, learners,
+                teachers, results and reports.
+
+            </p>
+
+
+            <a
+                href="/admin/login"
+                class="portal-link"
+            >
+                Administrator sign in →
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div>
+
+            <div class="footer-brand">
+
+                {% if school.logo_url %}
+
+                    <img
+                        src="{{ school.logo_url }}"
+                        alt="{{ school.name }} Logo"
+                    >
+
+                {% else %}
+
+                    <span>
+                        ✚
+                    </span>
+
+                {% endif %}
+
+
+                <span>
+                    {{ school.name }}
+                </span>
+
+            </div>
+
+
+            <p class="footer-description">
+                {{ school.tagline }}
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="#results">
+                Results
+            </a>
+
+            <a href="/signin">
+                Sign In
+            </a>
+
+            <a href="/teacher/login">
+                Teachers
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © {{ current_year }}
+        {{ school.name }}.
+        All rights reserved.
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>

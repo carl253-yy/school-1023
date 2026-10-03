@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ school.name }} | Create Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ====================================================== */
+
+        :root {
+            --navy: #0d3155;
+            --navy-dark: #082640;
+            --gold: #f4b73b;
+            --gold-dark: #d99b22;
+            --teal: #11777a;
+            --cream: #faf9f5;
+            --white: #ffffff;
+            --text: #092b4b;
+            --muted: #66758a;
+            --border: #ddd9d0;
+            --input-border: #d6dbe2;
+            --danger: #b42318;
+            --success: #087443;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           MAIN PAGE
+        ====================================================== */
+
+        .page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 42% 58%;
+        }
+
+
+        /* =====================================================
+           LEFT BRAND PANEL
+        ====================================================== */
+
+        .left-panel {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+
+            padding: 40px 46px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0b2d4d 0%,
+                    #0d3b61 55%,
+                    #092a47 100%
+                );
+        }
+
+        .left-panel::before {
+            content: "";
+            position: absolute;
+
+            width: 520px;
+            height: 520px;
+
+            border-radius: 50%;
+
+            top: -280px;
+            right: -250px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244,183,59,.10),
+                    transparent 70%
+                );
+        }
+
+        .left-panel::after {
+            content: "";
+
+            position: absolute;
+
+            width: 450px;
+            height: 450px;
+
+            border-radius: 50%;
+
+            bottom: -280px;
+            left: -250px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.05),
+                    transparent 70%
+                );
+        }
+
+
+        /* =====================================================
+           BRAND
+        ====================================================== */
+
+        .brand {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            background: rgba(255,255,255,.09);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .brand-fallback {
+            color: var(--gold);
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           LEFT CONTENT
+        ====================================================== */
+
+        .left-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 500px;
+        }
+
+        .eyebrow {
+            color: var(--gold);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+        }
+
+        .left-content h1 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: clamp(48px, 5vw, 66px);
+
+            line-height: .92;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 24px;
+        }
+
+        .left-content h1 span {
+            display: block;
+            color: var(--gold);
+        }
+
+        .left-description {
+            color: #d4e2ed;
+
+            font-size: 14px;
+
+            line-height: 1.75;
+
+            max-width: 450px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ====================================================== */
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+
+            list-style: none;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            color: #d8e4ee;
+
+            font-size: 12px;
+        }
+
+        .feature-icon {
+            width: 18px;
+            height: 18px;
+
+            border-radius: 50%;
+
+            border: 1px solid var(--gold);
+
+            color: var(--gold);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 9px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .left-footer {
+            position: relative;
+            z-index: 2;
+
+            color: #88a3ba;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           RIGHT SIDE
+        ====================================================== */
+
+        .right-panel {
+            min-height: 100vh;
+
+            background: var(--cream);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 45px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 560px;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .register-header {
+            margin-bottom: 24px;
+        }
+
+        .register-header h2 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 38px;
+
+            line-height: 1;
+
+            margin-bottom: 8px;
+        }
+
+        .register-header p {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ROLE SELECTOR
+        ====================================================== */
+
+        .roles {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 4px;
+
+            padding: 4px;
+
+            background: #f0eee8;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            margin-bottom: 24px;
+        }
+
+        .role {
+            min-height: 58px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: transparent;
+
+            color: #68788b;
+
+            cursor: pointer;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            font-size: 11px;
+
+            transition: .2s ease;
+        }
+
+        .role-icon {
+            font-size: 17px;
+        }
+
+        .role.active {
+            background: white;
+
+            color: var(--navy);
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,.08);
+        }
+
+        .role.active .role-icon {
+            color: var(--gold);
+        }
+
+
+        /* =====================================================
+           FORM
+        ====================================================== */
+
+        .form-card {
+            width: 100%;
+        }
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: var(--text);
+        }
+
+        .input,
+        .select {
+            width: 100%;
+
+            height: 45px;
+
+            padding: 0 13px;
+
+            border: 1px solid var(--input-border);
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: #1c3045;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: .2s ease;
+        }
+
+        .input::placeholder {
+            color: #8592a1;
+        }
+
+        .input:focus,
+        .select:focus {
+            border-color: #7d93a9;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(13,49,85,.07);
+        }
+
+
+        /* =====================================================
+           PASSWORD
+        ====================================================== */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .input {
+            padding-right: 45px;
+        }
+
+        .show-password {
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #748398;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           PASSWORD STRENGTH
+        ====================================================== */
+
+        .password-strength {
+            margin-top: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .strength-bars {
+            display: flex;
+
+            gap: 3px;
+
+            flex: 1;
+        }
+
+        .strength-bar {
+            height: 3px;
+
+            flex: 1;
+
+            background: #e2e5e8;
+
+            border-radius: 5px;
+        }
+
+        .strength-text {
+            font-size: 10px;
+
+            color: #8491a0;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           TERMS
+        ====================================================== */
+
+        .terms {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 8px;
+
+            margin: 4px 0 18px;
+
+            color: #718094;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        .terms input {
+            margin-top: 2px;
+
+            accent-color: var(--navy);
+        }
+
+        .terms a {
+            color: var(--navy);
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           SUBMIT
+        ====================================================== */
+
+        .register-button {
+            width: 100%;
+
+            height: 48px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: var(--navy);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            transition: .2s ease;
+        }
+
+        .register-button:hover {
+            background: var(--navy-dark);
+
+            transform: translateY(-1px);
+        }
+
+        .register-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           SECURITY
+        ====================================================== */
+
+        .security {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 18px;
+
+            color: #7b899a;
+
+            font-size: 10px;
+        }
+
+        .security-icon {
+            color: var(--gold);
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ====================================================== */
+
+        .divider {
+            width: 100%;
+
+            height: 1px;
+
+            background: var(--border);
+
+            margin: 24px 0 20px;
+        }
+
+
+        /* =====================================================
+           SIGN IN
+        ====================================================== */
+
+        .signin-link {
+            color: #718094;
+
+            font-size: 12px;
+        }
+
+        .signin-link a {
+            color: var(--navy);
+
+            font-weight: 700;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           ALERT
+        ====================================================== */
+
+        .alert {
+            padding: 11px 13px;
+
+            border-radius: 7px;
+
+            margin-bottom: 18px;
+
+            font-size: 12px;
+        }
+
+        .alert-error {
+            background: #fff1f0;
+
+            border: 1px solid #f2c7c3;
+
+            color: var(--danger);
+        }
+
+        .alert-success {
+            background: #effaf4;
+
+            border: 1px solid #c8ead8;
+
+            color: var(--success);
+        }
+
+
+        /* =====================================================
+           HIDDEN ROLE SECTIONS
+        ====================================================== */
+
+        .role-section {
+            display: none;
+        }
+
+        .role-section.active {
+            display: block;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1000px) {
+
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                min-height: 390px;
+
+                padding: 30px 35px;
+            }
+
+            .left-content {
+                margin-top: 30px;
+            }
+
+            .left-footer {
+                margin-top: 30px;
+            }
+
+            .right-panel {
+                min-height: auto;
+
+                padding: 55px 30px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .left-panel {
+                min-height: 350px;
+
+                padding: 25px 22px;
+            }
+
+            .left-content h1 {
+                font-size: 43px;
+            }
+
+            .left-description {
+                font-size: 12px;
+            }
+
+            .right-panel {
+                padding: 40px 20px;
+            }
+
+            .register-header h2 {
+                font-size: 34px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+        }
+
+
+        @media (max-width: 390px) {
+
+            .roles {
+                grid-template-columns: 1fr;
+            }
+
+            .role {
+                flex-direction: row;
+
+                gap: 8px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =====================================================
+         LEFT PANEL
+    ====================================================== -->
+
+    <section class="left-panel">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+
+                {% if school.logo_url %}
+
+                    <img
+                        src="{{ school.logo_url }}"
+                        alt="{{ school.name }} Logo"
+                    >
+
+                {% else %}
+
+                    <span class="brand-fallback">
+                        ✚
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="brand-name">
+                {{ school.name }}
+            </div>
+
+        </div>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="left-content">
+
+            <div class="eyebrow">
+                SCHOOL RESULTS PORTAL
+            </div>
+
+            <h1>
+
+                Create your
+                <span>
+                    account today.
+                </span>
+
+            </h1>
+
+            <p class="left-description">
+
+                Join the {{ school.name }} digital
+                learning community. Access academic
+                results, competency progress and
+                school information from one secure
+                platform.
+
+            </p>
+
+
+            <ul class="features">
+
+                <li>
+
+                    <span class="feature-icon">
+                        ✓
+                    </span>
+
+                    Secure school account
+
+                </li>
+
+
+                <li>
+
+                    <span class="feature-icon">
+                        ✓
+                    </span>
+
+                    Access learner progress
+
+                </li>
+
+
+                <li>
+
+                    <span class="feature-icon">
+                        ✓
+                    </span>
+
+                    CBC competency tracking
+
+                </li>
+
+
+                <li>
+
+                    <span class="feature-icon">
+                        ✓
+                    </span>
+
+                    One portal for your school
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="left-footer">
+
+            CBC · KENYA
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RIGHT PANEL
+    ====================================================== -->
+
+    <section class="right-panel">
+
+        <div class="register-container">
+
+
+            <!-- HEADER -->
+
+            <div class="register-header">
+
+                <h2>
+                    Create account
+                </h2>
+
+                <p id="description">
+
+                    Select your role and create
+                    your {{ school.name }} account.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ROLE SELECTOR
+            ================================================== -->
+
+            <div class="roles">
+
+
+                <button
+                    type="button"
+                    class="role active"
+                    data-role="parent"
+                >
+
+                    <span class="role-icon">
+                        ♙
+                    </span>
+
+                    <span>
+                        Parent
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="role"
+                    data-role="teacher"
+                >
+
+                    <span class="role-icon">
+                        ▣
+                    </span>
+
+                    <span>
+                        Teacher
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="role"
+                    data-role="admin"
+                >
+
+                    <span class="role-icon">
+                        ⚑
+                    </span>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+            {% if message %}
+
+                <div class="alert alert-error">
+
+                    {{ message }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 FORM
+            ================================================== -->
+
+            <form
+                class="form-card"
+                id="registerForm"
+                method="POST"
+                action="/register"
+            >
+
+
+                <input
+                    type="hidden"
+                    name="role"
+                    id="role"
+                    value="parent"
+                >
+
+
+                <!-- =================================================
+                     PARENT
+                ================================================== -->
+
+                <div
+                    class="role-section active"
+                    id="parentSection"
+                >
+
+                    <div class="form-row">
+
+                        <div class="field">
+
+                            <label>
+                                Parent / Guardian Name
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                name="parent_name"
+                                placeholder="Full name"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <input
+                                class="input"
+                                type="tel"
+                                name="parent_phone"
+                                placeholder="07XX XXX XXX"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            class="input"
+                            type="email"
+                            name="parent_email"
+                            placeholder="example@email.com"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Learner Assessment Number
+                        </label>
+
+                        <input
+                            class="input"
+                            type="text"
+                            name="assessment_number"
+                            placeholder="e.g. 20265512345"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TEACHER
+                ================================================== -->
+
+                <div
+                    class="role-section"
+                    id="teacherSection"
+                >
+
+                    <div class="form-row">
+
+                        <div class="field">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                name="teacher_name"
+                                placeholder="Full name"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                TSC Number
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                name="tsc_number"
+                                placeholder="TSC number"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            class="input"
+                            type="email"
+                            name="teacher_email"
+                            placeholder="teacher@email.com"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            class="input"
+                            type="tel"
+                            name="teacher_phone"
+                            placeholder="07XX XXX XXX"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ADMINISTRATOR
+                ================================================== -->
+
+                <div
+                    class="role-section"
+                    id="adminSection"
+                >
+
+                    <div class="form-row">
+
+                        <div class="field">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                name="admin_name"
+                                placeholder="Full name"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Administrator ID
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                name="admin_id"
+                                placeholder="Administrator ID"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            class="input"
+                            type="email"
+                            name="admin_email"
+                            placeholder="admin@email.com"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            class="input"
+                            type="tel"
+                            name="admin_phone"
+                            placeholder="07XX XXX XXX"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PASSWORD
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            class="input"
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="showPassword"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+
+                    <div class="password-strength">
+
+                        <div class="strength-bars">
+
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+
+                        </div>
+
+                        <span
+                            class="strength-text"
+                            id="strengthText"
+                        >
+                            Enter password
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CONFIRM PASSWORD
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <input
+                        class="input"
+                        type="password"
+                        id="confirmPassword"
+                        name="confirm_password"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TERMS
+                ================================================== -->
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        required
+                    >
+
+                    <span>
+
+                        I agree to the
+                        <a href="/terms">
+                            Terms of Service
+                        </a>
+                        and
+                        <a href="/privacy">
+                            Privacy Policy
+                        </a>.
+
+                    </span>
+
+                </label>
+
+
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================== -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                    id="registerButton"
+                >
+
+                    <span id="buttonText">
+                        Create parent account
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security">
+
+                <span class="security-icon">
+                    🔒
+                </span>
+
+                <span>
+                    Your account information is securely protected.
+                </span>
+
+            </div>
+
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider"></div>
+
+
+
+            <!-- LOGIN -->
+
+            <div class="signin-link">
+
+                Already have an account?
+
+                <a href="/signin">
+                    Sign in
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<script>
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const roles =
+        document.querySelectorAll(".role");
+
+    const roleInput =
+        document.getElementById("role");
+
+    const parentSection =
+        document.getElementById("parentSection");
+
+    const teacherSection =
+        document.getElementById("teacherSection");
+
+    const adminSection =
+        document.getElementById("adminSection");
+
+    const description =
+        document.getElementById("description");
+
+    const buttonText =
+        document.getElementById("buttonText");
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+
+    /* =====================================================
+       ROLE SWITCHING
+    ====================================================== */
+
+    roles.forEach(roleButton => {
+
+        roleButton.addEventListener(
+            "click",
+            function () {
+
+                const role =
+                    this.dataset.role;
+
+
+                /* Active button */
+
+                roles.forEach(button => {
+
+                    button.classList.remove("active");
+
+                });
+
+                this.classList.add("active");
+
+
+                /* Hidden role */
+
+                roleInput.value =
+                    role;
+
+
+                /* Hide sections */
+
+                parentSection.classList.remove("active");
+
+                teacherSection.classList.remove("active");
+
+                adminSection.classList.remove("active");
+
+
+                /* =========================================
+                   PARENT
+                ========================================== */
+
+                if (role === "parent") {
+
+                    parentSection.classList.add("active");
+
+                    description.textContent =
+                        "Create a secure account to follow your learner's competency progress.";
+
+                    buttonText.textContent =
+                        "Create parent account";
+
+                }
+
+
+                /* =========================================
+                   TEACHER
+                ========================================== */
+
+                if (role === "teacher") {
+
+                    teacherSection.classList.add("active");
+
+                    description.textContent =
+                        "Create your teacher account to manage learner assessments and results.";
+
+                    buttonText.textContent =
+                        "Create teacher account";
+
+                }
+
+
+                /* =========================================
+                   ADMIN
+                ========================================== */
+
+                if (role === "admin") {
+
+                    adminSection.classList.add("active");
+
+                    description.textContent =
+                        "Create an administrator account to manage your school portal.";
+
+                    buttonText.textContent =
+                        "Create administrator account";
+
+                }
+
+            }
+        );
+
+    });
+
+
+
+    /* =====================================================
+       SHOW PASSWORD
+    ====================================================== */
+
+    const password =
+        document.getElementById("password");
+
+    const confirmPassword =
+        document.getElementById("confirmPassword");
+
+    const showPassword =
+        document.getElementById("showPassword");
+
+
+    showPassword.addEventListener(
+        "click",
+        function () {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                confirmPassword.type = "text";
+
+            } else {
+
+                password.type = "password";
+
+                confirmPassword.type = "password";
+
+            }
+
+        }
+    );
+
+
+
+    /* =====================================================
+       PASSWORD STRENGTH
+    ====================================================== */
+
+    const strengthBars =
+        document.querySelectorAll(".strength-bar");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+
+    password.addEventListener(
+        "input",
+        function () {
+
+            const value =
+                password.value;
+
+            let strength = 0;
+
+
+            if (value.length >= 8) {
+                strength++;
+            }
+
+            if (/[A-Z]/.test(value)) {
+                strength++;
+            }
+
+            if (/[0-9]/.test(value)) {
+                strength++;
+            }
+
+            if (/[^A-Za-z0-9]/.test(value)) {
+                strength++;
+            }
+
+
+            strengthBars.forEach(
+                (bar, index) => {
+
+                    if (index < strength) {
+
+                        bar.style.background =
+                            "#11777a";
+
+                    } else {
+
+                        bar.style.background =
+                            "#e2e5e8";
+
+                    }
+
+                }
+            );
+
+
+            if (!value) {
+
+                strengthText.textContent =
+                    "Enter password";
+
+            } else if (strength <= 1) {
+
+                strengthText.textContent =
+                    "Weak";
+
+            } else if (strength === 2) {
+
+                strengthText.textContent =
+                    "Fair";
+
+            } else if (strength === 3) {
+
+                strengthText.textContent =
+                    "Good";
+
+            } else {
+
+                strengthText.textContent =
+                    "Strong";
+
+            }
+
+        }
+    );
+
+
+
+    /* =====================================================
+       PASSWORD MATCH
+    ====================================================== */
+
+    confirmPassword.addEventListener(
+        "input",
+        function () {
+
+            if (
+                confirmPassword.value &&
+                confirmPassword.value !== password.value
+            ) {
+
+                confirmPassword.style.borderColor =
+                    "#b42318";
+
+            } else {
+
+                confirmPassword.style.borderColor =
+                    "#d6dbe2";
+
+            }
+
+        }
+    );
+
+
+
+    /* =====================================================
+       FORM SUBMIT
+    ====================================================== */
+
+    registerForm.addEventListener(
+        "submit",
+        function (event) {
+
+            if (
+                password.value !==
+                confirmPassword.value
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "Passwords do not match."
+                );
+
+                return;
+            }
+
+
+            const button =
+                document.getElementById(
+                    "registerButton"
+                );
+
+
+            button.style.opacity =
+                "0.7";
+
+            button.style.pointerEvents =
+                "none";
+
+
+            buttonText.textContent =
+                "Creating account...";
+
+        }
+    );
+
+</script>
+
+
+</body>
+</html>
