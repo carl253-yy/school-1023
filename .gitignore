@@ -1,0 +1,10 @@
+.env
+.env.*
+.venv*/
+node_modules/
+__pycache__/
+users.json
+school_data.json
+report_*.txt
+.postman/
+postman/globals/workspace.globals.yaml

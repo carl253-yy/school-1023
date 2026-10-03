@@ -1,0 +1,101 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ school.name }} | Learner Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}" />
+</head>
+<body>
+  <div class="results-page">
+    <div class="portal-card">
+
+      <h1>{{ school.name }}</h1>
+      <p>Enter your child's admission number to view their CBC assessment results and teacher remarks.</p>
+
+      <form class="search-form" method="get" action="{{ request.path }}">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input
+            type="text"
+            name="admission_number"
+            placeholder="e.g. G5-A7B29"
+            value="{{ admission_number or '' }}"
+          />
+        </div>
+        <button type="submit">Search Results</button>
+      </form>
+
+      {% if message %}
+        <p class="info-message">{{ message }}</p>
+      {% endif %}
+
+      {% if record %}
+        <div class="result-card">
+
+          <h2>{{ record.student_name }}</h2>
+
+          <div class="result-meta">
+            <span><strong>Admission Number:</strong> {{ record.admission_number }}</span>
+            <span><strong>Class:</strong> {{ record.grade }}</span>
+          </div>
+
+          <h3>Subject Results</h3>
+
+          {% if record.subject_results %}
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Rubric</th>
+                  <th>Teacher</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in record.subject_results %}
+                  <tr>
+                    <td>{{ item.subject }}</td>
+                    <td><span class="rubric-badge rubric-{{ item.rubric }}">{{ item.rubric }}</span></td>
+                    <td>{{ item.teacher }}</td>
+                    <td>{{ item.remarks or "—" }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p class="info-message">No published results yet for this learner.</p>
+          {% endif %}
+
+          <div class="result-actions">
+            <a class="save-btn" href="mailto:school@example.com?subject=Child%20Performance%20Support">Contact Teacher</a>
+          </div>
+
+        </div>
+      {% endif %}
+
+      <div class="features">
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">Private &amp; Secure</div>
+          <p class="feature-text">Only linked parents can view</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">▥</div>
+          <div class="feature-title">CBC Tracker</div>
+          <p class="feature-text">Rubric level by subject</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎓</div>
+          <div class="feature-title">All Subjects</div>
+          <p class="feature-text">Published results only</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
